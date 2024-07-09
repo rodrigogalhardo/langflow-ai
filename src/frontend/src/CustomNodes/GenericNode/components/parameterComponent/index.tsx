@@ -1,3 +1,4 @@
+import { usePostTemplateValue } from "@/controllers/API/queries/nodes/use-post-template-value";
 import { cloneDeep } from "lodash";
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
@@ -133,15 +134,10 @@ export default function ParameterComponent({
   const output = useShortcutsStore((state) => state.output);
   useHotkeys(output, handleOutputWShortcut, { preventDefault });
 
-  const { handleOnNewValue: handleOnNewValueHook } = useHandleOnNewValue(
-    data,
-    name,
-    takeSnapshot,
-    handleUpdateValues,
-    debouncedHandleUpdateValues,
-    setNode,
-    setIsLoading,
-  );
+  const postTemplateValue = usePostTemplateValue({
+    parameterId: name,
+    nodeData: data,
+  });
 
   const { handleNodeClass: handleNodeClassHook } = useHandleNodeClass(
     data,
@@ -172,12 +168,27 @@ export default function ParameterComponent({
 
   useFetchDataOnMount(data, name, handleUpdateValues, setNode, setIsLoading);
 
+  const { handleOnNewValue: handleOnNewValueHook } = useHandleOnNewValue(
+    data,
+    name,
+    takeSnapshot,
+    handleUpdateValues,
+    debouncedHandleUpdateValues,
+    setNode,
+    setIsLoading,
+  );
+
   const handleOnNewValue = async (
     newValue: string | string[] | boolean | Object[],
     dbValue?: boolean,
     skipSnapshot: boolean | undefined = false,
   ): Promise<void> => {
-    handleOnNewValueHook(newValue, dbValue, skipSnapshot);
+    // handleOnNewValueHook(newValue, dbValue, skipSnapshot);
+    postTemplateValue.mutate({
+      value: newValue,
+      load_from_db: dbValue,
+      skipSnapshot,
+    });
   };
 
   const handleNodeClass = (
