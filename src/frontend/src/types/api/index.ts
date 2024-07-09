@@ -253,6 +253,23 @@ export type MutationFunctionType = (
   options?: Omit<UseMutationOptions<any, any>, "mutationFn" | "mutationKey">,
 ) => UseMutationResult<any, any, any, any>;
 
-export type useMutationFunctionType<Variables, Data = any, Error = any> = (
-  options?: Omit<UseMutationOptions<Data, Error>, "mutationFn" | "mutationKey">,
-) => UseMutationResult<Data, Error, Variables>;
+export type useMutationFunctionType<
+  Params,
+  Variables,
+  Data = any,
+  Error = any,
+> = Params extends undefined
+  ? (
+      params?: Params,
+      options?: Omit<
+        UseMutationOptions<Data, Error>,
+        "mutationFn" | "mutationKey"
+      >,
+    ) => UseMutationResult<Data, Error, Variables>
+  : (
+      params: Params,
+      options?: Omit<
+        UseMutationOptions<Data, Error>,
+        "mutationFn" | "mutationKey"
+      >,
+    ) => UseMutationResult<Data, Error, Variables>;
