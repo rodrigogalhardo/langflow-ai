@@ -6,6 +6,7 @@ export const URLs = {
   FILES: `files`,
   VERSION: `version`,
   MESSAGES: `monitor/messages`,
+  CUSTOM_COMPONENT: `custom_component`,
 } as const;
 
 export function getURL(key: keyof typeof URLs, params: any = {}) {
