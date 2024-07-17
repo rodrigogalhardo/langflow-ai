@@ -18,10 +18,6 @@ if TYPE_CHECKING:
     from langflow.graph.vertex.base import Vertex
     from langflow.services.monitor.service import MonitorService
     from langflow.services.settings.service import SettingsService
-    from langflow.custom.custom_component.component import Component
-    from langflow.graph.vertex.base import Vertex
-    from langwatch.tracer import ContextSpan
-    from langwatch.types import SpanTypes
 
 
 class TracingService(Service):
