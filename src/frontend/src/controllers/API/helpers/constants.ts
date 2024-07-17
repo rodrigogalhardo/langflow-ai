@@ -8,6 +8,12 @@ export const URLs = {
   MESSAGES: `monitor/messages`,
   CUSTOM_COMPONENT: `custom_component`,
   STORE: `store`,
+  USERS: "users",
+  LOGOUT: `logout`,
+  LOGIN: `login`,
+  AUTOLOGIN: "auto_login",
+  REFRESH: "refresh",
+  BUILD: `build`,
 } as const;
 
 export function getURL(key: keyof typeof URLs, params: any = {}) {

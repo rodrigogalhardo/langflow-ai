@@ -201,12 +201,18 @@ export type OutputLogType = {
   message: any | ErrorLogType;
   type: string;
 };
+export type LogsLogType = {
+  name: string;
+  message: any | ErrorLogType;
+  type: string;
+};
 
 // data is the object received by the API
 // it has results, artifacts, timedelta, duration
 export type VertexDataTypeAPI = {
   results: { [key: string]: string };
   outputs: { [key: string]: OutputLogType };
+  logs: { [key: string]: LogsLogType };
   messages: ChatOutputType[] | ChatInputType[];
   inactive?: boolean;
   timedelta?: number;
@@ -255,7 +261,7 @@ export type MutationFunctionType = (
 
 export type useMutationFunctionType<
   Params,
-  Variables,
+  Variables = any,
   Data = any,
   Error = any,
 > = Params extends undefined
