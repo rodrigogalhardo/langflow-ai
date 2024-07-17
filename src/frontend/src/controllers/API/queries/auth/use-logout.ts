@@ -8,7 +8,9 @@ import { api } from "../../api";
 import { getURL } from "../../helpers/constants";
 import { UseRequestProcessor } from "../../services/request-processor";
 
-export const useLogout: useMutationFunctionType<undefined> = (options?) => {
+export const useLogout: useMutationFunctionType<undefined, undefined> = (
+  options?,
+) => {
   const { mutate } = UseRequestProcessor();
 
   async function logoutUser(): Promise<any> {
