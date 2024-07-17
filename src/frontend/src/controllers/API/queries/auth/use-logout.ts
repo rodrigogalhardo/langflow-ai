@@ -1,3 +1,4 @@
+import useAuthStore from "@/stores/authStore";
 import {
   changeUser,
   resetPasswordType,
@@ -14,15 +15,15 @@ export const useLogout: useMutationFunctionType<undefined, undefined> = (
   const { mutate } = UseRequestProcessor();
 
   async function logoutUser(): Promise<any> {
+    const autoLogin = useAuthStore.getState().autoLogin;
+    if (autoLogin) {
+      return {};
+    }
     const res = await api.patch(`${getURL("LOGOUT")}`);
     return res.data;
   }
 
-  const mutation: UseMutationResult<undefined, any, undefined> = mutate(
-    ["useLogout"],
-    logoutUser,
-    options,
-  );
+  const mutation = mutate(["useLogout"], logoutUser, options);
 
   return mutation;
 };
